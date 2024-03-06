@@ -86,3 +86,48 @@ gandalf.curar(legolas);
 (function(){
     console.log("anonima")
 })();
+
+//----Sobrecarga operadores
+function crearProducto(nombre, precio){
+    nombre = nombre || "sin nombre";
+    precio = precio || 0;
+    console.log( nombre + " " + precio) ;
+}
+function crearProducto100(nombre){
+    crearProducto(nombre,100);
+}
+function crearProductoCamisa(precio){
+    crearProducto("Camisa",precio);
+}
+crearProducto();
+crearProducto100("Lapiz");
+crearProductoCamisa("150");
+
+//--Polimorfismo
+
+function determinarDato(a){
+    if (a === undefined)
+        console.log("parametro undefined");
+    if ( typeof a === "number")
+        console.log("parametro numerico");
+    if ( typeof a === "string")
+        console.log("parametro texto");
+    if ( typeof a === "object"){
+        //console.log("parametro objeto, puede ser cualquier tipo");
+        //se puede consultar por el tipo de objeto cusomizado por ejemplo Persona
+        if (a instanceof Persona)
+            console.log("parametro objeto del tipo Persona");
+        if (a instanceof Number)
+            console.log("parametro objeto del tipo numerico");
+        if (a instanceof String)
+            console.log("parametro objeto del tipo texto");
+        if (a instanceof Boolean)
+            console.log("parametro objeto del tipo bool");
+    }
+}
+var b = new Number(3);
+determinarDato(persona);
+//--contexto funciones
+(function () {
+  console.log("naci!");
+})();
