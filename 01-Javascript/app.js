@@ -131,3 +131,73 @@ determinarDato(persona);
 (function () {
   console.log("naci!");
 })();
+
+//-----------
+var fecha =  new Date(2024,3,6);
+console.log(fecha);
+
+Date.prototype.sumarDias = function(dias){
+    this.setDate(this.getDate() + dias);
+    return this;
+}
+
+console.log(fecha.sumarDias(10));
+//----
+//i = insensible
+//g = todas las apariciones
+//m = multilinea para "Enters"
+
+var reg1 = RegExp("a");
+var reg2 = /m/i;
+
+var texto = "Hola Mundo";
+
+var arr = texto.match(reg2);
+
+console.log(arr);
+//----------
+try { //el try necesita un catch o un finally
+    throw new Error("error manejado");//forzamos al catch
+
+} catch (e) {//es opcional
+    console.log(e);
+    registroError(e.message);
+    
+}
+finally{//si no se utiliza catch debe ir finally 
+    console.log("finally");
+}
+function registroError(e){
+    var diaError = new Date();
+    console.log("Se registró un error: ",e ," a las ", diaError.getTime() );
+}
+//--
+
+function crearCookie(nombre, valor){
+    //Ojo con los caracteres por ejemplo el punto y coma
+    //para eso escapamos los valores para cambiar los valores que puedan llegar a dar problemas por su version HTML
+    var hoy =  new Date();
+    hoy.setMonth(hoy.getMonth()+1);//vencimiento en un mes
+    valor = escape(valor);
+    //var valorOriginal = unescape(escape(valor)); Inversa
+    document.cookie=nombre +"="+ valor+";expires"+hoy.toUTCString()+";";
+}
+
+function borrarCookie(nombre){
+    var hoy =  new Date();
+    hoy.setMonth(hoy.getMonth()-1);//vencimiento en un mes
+    
+    document.cookie=nombre +"="+"x;expires"+hoy.toUTCString()+";";
+    
+}
+
+function getCookie(nombre){
+    var cookies = document.cookie;
+    var cookiesArr = cookie.split("; ");
+    console.log(cookiesArr);
+    return undefined;
+    
+    }
+getCookie("nombre");
+//crearCookie("nombre","Pablo");
+//borrarCookie("nombre","Pablo");
