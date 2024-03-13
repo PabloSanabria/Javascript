@@ -129,8 +129,8 @@ var obj =  {
 
 var subfijo = " nombre";
 var banda = {
-    ["1banda" + subfijo]: "Qpersonaje",
-    ["2banda" + subfijo]: "Lakonga" 
+    ["1banda " + subfijo]: "Qpersonaje",
+    ["2banda " + subfijo]: "Lakonga" 
 };
 
 console.log(banda["1banda nombre"]);
