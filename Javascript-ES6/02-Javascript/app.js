@@ -1,137 +1,143 @@
-
-const IMPUESTO_PAIS = 21;
-//console.log(IMPUESTO_PAIS);
-//console.log(mensaje);
-//---
-var saludo = "Hola Mundo";
-//console.log(saludo.startsWith("H"));
-//console.log(saludo.includes("mu"));
-//console.log(saludo.repeat(2));
-//------------------
-function etiqueta(literales, ...substituciones){
-    //console.log(arguments);
-    //console.log(literales);
-    //console.log(substituciones);
-    let resultado = "";
-    for (let i = 0; i < substituciones.length; i++) {
-        resultado += literales[i];
-        resultado += substituciones[i];        
+let gato = {
+    sonido(){
+        console.log("Miau");
+    },
+    chillido(){
+        console.log("MIAU!!!");
     }
-    return resultado;
 }
 
-let unidades = 5, 
-    costo = 10;
-
-let mensaje = etiqueta`${unidades} lapices cuestan ${unidades * costo} pesos`; 
-
-//console.log(mensaje);
-//--
-//--colocar siempre primeros los parametros obligatorios y luego los opcionales
-function saludar( arr_alumnos, ...masAlumnos){
-    
-    //console.log(arguments);
-    //console.log(arr_alumnos, masAlumnos);
+let perro = {
+    sonido(){
+        console.log("Guau");
+    }
 }
 
-let arr_alumnos = ["Pablo"];
-
-let arr_alumnos2 = saludar(arr_alumnos, "Pedro", "Vilma", "Sara");
-
-let numeros = [1,2,84,3,4,55];
-let max = Math.max(...numeros);
-//console.log(max);
-
+let angora  = Object.create(gato);
+// console.log(Object.getPrototypeOf(angora) === gato);
+// angora.sonido();
+// angora.chillido();
+// Object.setPrototypeOf(angora,perro);
+// console.log(Object.getPrototypeOf(angora) === gato);
+// angora.sonido();
+// angora.chillido();
+//--------------SUPER
 let persona = {
-    nombre: "Pablo",
-    apellido:"Sanabria",
-    edad: 37,
-}
-
-let persona2 = {
-    nombre: "Pablo",
-    apellido:"Sanabria",
-    edad: 37,
-    direccion:"jvg 2314",
-    ciudad: "San miguel"
-}
-
-persona2.nombre = "Leonardo";
-persona2.edad = 41;
-
-persona = {...persona2, ...persona};
-
-// console.log(persona);
-// console.log(persona2);
-function Persona(nombre){
-    this.nombre = nombre;
-}
-
-var persona1 = new Persona("Fernando");
-var noPersona = Persona("Fernando");
-// console.log(persona1);
-// console.log(noPersona);
-// if(this instanceof Persona){
-//     //inicializar o asignar valores al objeto
-//     this.nombre = nombre;
-// }
-// else
-//     throw new Error("Esta funcion debe ser utilizada con el new");
-
-var miFuncion1 = function(valor){
-    return valor;
-}
-
-let miFuncion2 = valor => valor;
-
-let sumar = (num1,num2) => num1+num2;
-let saludarP = () => "Hola Mundo desde Fn Arrow";
-
-let saludarPersona = nombre=>{
-    let saluda = `Hola ${nombre}`;
-    return saluda;
-}
-
-let obtenerLibro = id => ({
-    id: 3,
-    nombre: "Harry Poter"
-})
-
-let saludo3 = (nombre => `Hola desde fn arrow anonima ${nombre}`)()
-// console.log(miFuncion1());
-// console.log(miFuncion2());
-// console.log(sumar(1,5));
-//console.log(saludarPersona("Pablito"));
-//console.log(obtenerLibro(3));
-//console.log(saludo3);
-//----------
-function crearPersona(nombre, apellido, edad){
-    return {
-        nombre,
-        apellido,
-        edad
+    saludar(){
+        return "HOla!, ";
     }
-} 
-var pers = crearPersona("Pablo","Sanabria",37); 
-console.log(pers);
-
-var obj =  {
-    numero:10,
-    nombre:"Pabl010",
-    //Antes
-    //imprimirNombre: function(){...
-    imprimirNombre(){
-        console.log(this.nombre);
-    }
-}
-
-//obj.imprimirNombre();
-
-var subfijo = " nombre";
-var banda = {
-    ["1banda " + subfijo]: "Qpersonaje",
-    ["2banda " + subfijo]: "Lakonga" 
 };
 
-console.log(banda["1banda nombre"]);
-console.log(banda["2banda" + subfijo]);
+let amigo = {
+    saludar(){
+        //antes
+        //return Object.getPrototypeOf(this).saludar(this) + "Saludos!!!";
+        //ahora
+        return super.saludar() + "Saludos!!!"; 
+    }
+};
+
+Object.setPrototypeOf(amigo, persona);
+//console.log(amigo.saludar());
+let ajustes = {
+    nombre: "Pablo Sanabria",
+    email: "pablosanab@hotmail.com",
+    facebook: "p.s.Face.com.77",
+    premium: true
+}
+//se desestructura con el nombre que se le define en el objeto, no importa el orden
+//let {nombre,email,facebook,premium} = ajustes;
+//se puede modificar el nombre de la nueva variable/objeto al momento de la asignacion 
+//let {premium:dePago,nombre,email,facebook} = ajustes;
+//tambien se pueden declarar nuevas variable
+//let {premium:dePago,nombre,email,facebook, twitter = "Pablo.x.86"} = ajustes;
+//tambien se pueden declarar nuevas variable con parametros opcionales si twitter existiera 
+//y tuviera valor en el objeto ajustes se mostraria ese valor
+let {premium:dePago,nombre,email,facebook, twitter:cuentaTwi = "Pablo.x.86"} = ajustes;
+
+//console.log(dePago, nombre, cuentaTwi);
+///----
+let autoguardado = {
+    archivo: "index.js",
+    cursor: {
+        linea:7,
+        columna:16
+    },
+    ultimoArchivo: {
+        archivo: "index.html",
+        cursor: {
+            linea: 8,
+            columna: 20
+        }
+    },
+    otroNodo:{
+        subNodo:{
+            cursor:{
+                linea:11,
+                columna:11
+            }     
+        }
+    }
+};
+//primer objeto
+//let {cursor}= autoguardado;
+//3er objeto
+// let {ultimoArchivo:{cursor:ultimoArchivo2}} = autoguardado;
+// console.log(ultimoArchivo2);
+//4to objeto
+let {otroNodo:{subNodo:{cursor:ultimoArchivo2}}} = autoguardado;
+// console.log(ultimoArchivo2);
+//otra manera
+let superNodo = autoguardado.otroNodo.subNodo.cursor;
+// console.log(superNodo);
+//-----
+let frutas = ["banana", "uva", "frutilla"];
+//es en orden secuencial
+let [fruta1,fruta2] = frutas;
+console.log(fruta1,fruta2);
+//si quiero solo la 3era fruta
+let [,,fruta3] = frutas;
+console.log(fruta3);
+//se puede sobreescibir valores 
+let otraFruta = "manzana";
+//aqui otraFruta toma el valor de la primera posicion del arr frutas
+[otraFruta] = frutas;
+console.log(otraFruta);
+//-------------
+//permite cambiar valores en variables
+let a = 1;
+let b = 2;
+let temp;
+
+[a,b]=[b,a];
+
+console.log(a);
+console.log(b);
+//-----------
+let colores1 = ["rojo", ["verde","amarillo"],"morado", "naranja"];
+
+let [color1, [color2] ] = colores1;
+ console.log(color1,color2);
+
+ let colores2 = ["rojo", "verde","amarillo","morado", "naranja"];
+ //hacer que los colores luego del primero se guarden en otro arreglo
+ //el valor rest(...) para desdestructuracion solo sirve para arreglos no para objetos
+ let [colorPrincipal, ...demasColores] = colores2;
+ console.log(colorPrincipal);
+ console.log(demasColores);
+ //-----
+ function crearjugador(nickname, 
+    { hp, sp, clase }= {hp:100,sp:50,clase:"Mago"}
+){
+    //opciones = opciones || {};
+
+    // let hp = opciones.hp,
+    // sp = opciones.sp,
+    // clase = opciones.clase;
+    console.log(nickname,hp,sp,clase);
+    //codigo para crear el jugador...
+ }
+
+ crearjugador("Pipino",{ 
+        hp: 100, sp: 50, clase: "Mago"
+});
