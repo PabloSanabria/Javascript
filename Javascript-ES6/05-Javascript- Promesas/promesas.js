@@ -36,14 +36,7 @@ const getEmpleado= (id) => {
         }
     });
 };
-//crear una fn getSalario, que reciba el id de la persona y que si la persona no existe el mensaje será
-//err: no se encontró un salario para el empleado {nombre del empleado} 
-//Si existe: la salida será un objeto 
-// {
-//     nombre: "Fernando",
-//     salario: 1000,
-//     id: 1
-// }
+
 const getSalario = (empleado) => {
     return new Promise((resolve,reject)=>{
         const salarioDB = salarios.find( salario => salario.id === empleado.id);
