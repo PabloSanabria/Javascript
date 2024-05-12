@@ -7,13 +7,14 @@ export const forAwaitComponent = async( element ) => {
 
     const id1 = '5d86371f97c29d020f1e1f6d'; 
 
-    //const hero = await getHeroAsync(id1);
+    const heroIds = heroes.map(hero => hero.id);
+    const heroPromises = getHeroesAsync(heroIds);
 
-    if(await getHeroAsync(id1)){
-        element.innerHTML = `Existe el héroe: ${hero.name}` ;
-        return;
+    for await ( const hero of heroPromises)
+    {
+        element.innerHTML += ` ${ hero.name } <br/>`
     }
-    element.innerHTML = 'No existe el héroe';
+  
 }
 
 /**
