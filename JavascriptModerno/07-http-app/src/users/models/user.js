@@ -1,7 +1,7 @@
 
 export class User{
 
-    //**
+    /**
      * 
      * @param {Like<User>} userDataLike 
      */
